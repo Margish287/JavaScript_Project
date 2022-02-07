@@ -1,112 +1,93 @@
 const menu = [
   {
     id: 1,
-    title: 'buttermilk pancakes',
-    category: 'Breakfast',
+    title: "buttermilk pancakes",
+    category: "Breakfast",
     price: 15.99,
-    img: './Assets/item-1.jpeg',
+    img: "./Assets/item-1.jpeg",
     desc: `I'm baby woke mlkshk wolf bitters live-edge blue bottle, hammock freegan copper mug whatever cold-pressed `,
   },
   {
     id: 2,
-    title: 'diner double',
-    category: 'Lunch',
+    title: "diner double",
+    category: "Lunch",
     price: 13.99,
-    img: './Assets/item-2.jpeg',
+    img: "./Assets/item-2.jpeg",
     desc: `vaporware iPhone mumblecore selvage raw denim slow-carb leggings gochujang helvetica man braid jianbing. Marfa thundercats `,
   },
   {
     id: 3,
-    title: 'godzilla milkshake',
-    category: 'Shakes',
+    title: "godzilla milkshake",
+    category: "Shakes",
     price: 6.99,
-    img: './Assets/item-3.jpeg',
+    img: "./Assets/item-3.jpeg",
     desc: `ombucha chillwave fanny pack 3 wolf moon street art photo booth before they sold out organic viral.`,
   },
   {
     id: 4,
-    title: 'country delight',
-    category: 'Breakfast',
+    title: "country delight",
+    category: "Breakfast",
     price: 20.99,
-    img: './Assets/item-4.jpeg',
+    img: "./Assets/item-4.jpeg",
     desc: `Shabby chic keffiyeh neutra snackwave pork belly shoreditch. Prism austin mlkshk truffaut, `,
   },
   {
     id: 5,
-    title: 'egg attack',
-    category: 'Lunch',
+    title: "egg attack",
+    category: "Lunch",
     price: 22.99,
-    img: './Assets/item-5.jpeg',
+    img: "./Assets/item-5.jpeg",
     desc: `franzen vegan pabst bicycle rights kickstarter pinterest meditation farm-to-table 90's pop-up `,
   },
   {
     id: 6,
-    title: 'oreo dream',
-    category: 'Shakes',
+    title: "oreo dream",
+    category: "Shakes",
     price: 18.99,
-    img: './Assets/item-6.jpeg',
+    img: "./Assets/item-6.jpeg",
     desc: `Portland chicharrones ethical edison bulb, palo santo craft beer chia heirloom iPhone everyday`,
   },
   {
     id: 7,
-    title: 'bacon overflow',
-    category: 'Breakfast',
+    title: "bacon overflow",
+    category: "Breakfast",
     price: 8.99,
-    img: './Assets/item-7.jpeg',
+    img: "./Assets/item-7.jpeg",
     desc: `carry jianbing normcore freegan. Viral single-origin coffee live-edge, pork belly cloud bread iceland put a bird `,
   },
   {
     id: 8,
-    title: 'american classic',
-    category: 'Lunch',
+    title: "american classic",
+    category: "Lunch",
     price: 12.99,
-    img: './Assets/item-8.jpeg',
+    img: "./Assets/item-8.jpeg",
     desc: `on it tumblr kickstarter thundercats migas everyday carry squid palo santo leggings. Food truck truffaut  `,
   },
   {
     id: 9,
-    title: 'quarantine buddy',
-    category: 'Shakes',
+    title: "quarantine buddy",
+    category: "Shakes",
     price: 16.99,
-    img: './Assets/item-9.jpeg',
+    img: "./Assets/item-9.jpeg",
     desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
   },
   {
     id: 10,
-    title: 'bison steak',
-    category: 'Dinner',
+    title: "bison steak",
+    category: "Dinner",
     price: 22.99,
-    img: './Assets/item-10.jpeg',
+    img: "./Assets/item-10.jpeg",
     desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
   },
 ];
 
-const sectionCenter = document.querySelector('.section-center');
-const filterBtn = document.querySelectorAll('.filter-btn');
+const sectionCenter = document.querySelector(".section-center");
+const container = document.querySelector(".btn-container");
 
 //load item
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener("DOMContentLoaded", () => {
   displayMenuItems(menu);
-});
-
-//filter btn
-filterBtn.forEach((btn) => {
-  btn.addEventListener('click', (e) => {
-    // console.log(e.currentTarget.dataset);
-    const category = e.currentTarget.dataset.id;
-
-    const menuCategory = menu.filter((menuItem) => {
-      // console.log(menuItem.category);
-      if (menuItem.category === category) {
-        return menuItem;
-      }
-    });
-    if (category === 'All') {
-      displayMenuItems(menu);
-    } else {
-      displayMenuItems(menuCategory);
-    }
-  });
+  displayCategoryBtn();
 });
 
 const displayMenuItems = (menuItems) => {
@@ -125,7 +106,47 @@ const displayMenuItems = (menuItems) => {
           </div>
       </article>`;
   });
-  displayMenu = displayMenu.join('');
+  displayMenu = displayMenu.join("");
   //   console.log(displayMenu);
   sectionCenter.innerHTML = displayMenu;
+};
+
+const displayCategoryBtn = () => {
+  const categories = menu.reduce(
+    (values, item) => {
+      if (!values.includes(item.category)) {
+        values.push(item.category);
+      }
+      return values;
+    },
+    ["All"]
+  );
+  const categoriesBtn = categories
+    .map((category) => {
+      return `<button class="filter-btn" type="button" data-id=${category}>${category}</button>`;
+    })
+    .join("");
+
+  container.innerHTML = categoriesBtn;
+
+  const filterBtn = document.querySelectorAll(".filter-btn");
+  //filter btn
+  filterBtn.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      // console.log(e.currentTarget.dataset);
+      const category = e.currentTarget.dataset.id;
+
+      const menuCategory = menu.filter((menuItem) => {
+        // console.log(menuItem.category);
+        if (menuItem.category === category) {
+          return menuItem;
+        }
+      });
+      if (category === "All") {
+        displayMenuItems(menu);
+      } else {
+        displayMenuItems(menuCategory);
+      }
+    });
+  });
 };

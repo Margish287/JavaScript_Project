@@ -168,7 +168,9 @@ main {
 
 .btn-container {
   margin-bottom: 4rem;
-  display: flex;
+  display: grid;
+  grid-template-columns: 125px 125px;
+  gap: 0.5rem;
   justify-content: center;
 }
 
@@ -237,6 +239,12 @@ main {
   }
   .photo {
     height: 170px;
+  }
+
+  .btn-container {
+    margin-bottom: 4rem;
+    display: flex;
+    justify-content: center;
   }
 }
 
